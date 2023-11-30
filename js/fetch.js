@@ -18,6 +18,7 @@ fetch(localUrl)
   .then((response) => {
     // console.log('response ===', response);
     // jei response ne ok tai klaida
+    // response nera duomenu
     return response.text();
     return response.json();
   })
@@ -42,23 +43,10 @@ function generatePosts() {
     .then((postArr) => {
       // cia mes turim duomenis
       console.log('postArr ===', postArr);
+      let pirmi10Postu = postArr.slice(0, 10);
+      console.log('pirmi10Postu ===', pirmi10Postu);
       // atskirti ikelimo i html funkcionaluma i atksira funkcija
-      addToHtml();
-      postArr.forEach((postObj) => {
-        // sukurti li
-        const liHTML = `
-        <li class="card">
-          <p class="id">post id: ${postObj.id}</p>
-          <h3>${postObj.title}</h3>
-          <p class="text">${postObj.body}</p>
-        </li>
-        `;
-        console.log('liHTML ===', liHTML);
-        // prideti texta
-        // patalpinti ul
-        // els.postUl.innerHTML += liHTML;
-        els.postUl.insertAdjacentHTML('beforeend', liHTML);
-      });
+      addToHtml(pirmi10Postu);
     })
     .catch((err) => {
       console.warn('klaida generatePosts', err);
@@ -66,4 +54,24 @@ function generatePosts() {
 }
 generatePosts();
 
-function addToHtml() {}
+function addToHtml(arr) {
+  arr.forEach((postObj) => {
+    // sukurti li
+    const liHTML = `
+    <li class="card small">
+      <p class='doc section'>post id: ${postObj.id}</p>
+      <h3 class=''>${postObj.title}</h3>
+      <p class="">${postObj.body}</p>
+    </li>
+    `;
+    // console.log('liHTML ===', liHTML);
+
+    // els.postUl.innerHTML += liHTML;
+    els.postUl.insertAdjacentHTML('beforeend', liHTML);
+  });
+}
+
+// su atskkra funkcija
+// parsiusti user arr is  https://jsonplaceholder.typicode.com/users
+// sugeneruoti li su vardu ir email kaip li elementus
+// patalpinti  <ul id="users"></ul>
