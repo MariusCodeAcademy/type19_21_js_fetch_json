@@ -90,7 +90,7 @@ function getUsers() {
     .then((resp) => resp.json())
     .then((usersArr) => {
       console.log('usersArr ===', usersArr);
-      generateUsers(usersArr);
+      generateUsersMap(usersArr);
     })
     .catch((error) => {
       console.warn('ivyko klaida:', error);
@@ -104,4 +104,23 @@ function generateUsers(arr) {
     liEl.textContent = `${usrObj.name} email: ${usrObj.email}`;
     els.usersUl.append(liEl);
   });
+}
+function generateUsersMap(arr) {
+  const htmlElArr = arr.map((usrObj) => {
+    const liEl = document.createElement('li');
+    liEl.textContent = `${usrObj.name} email: ${usrObj.email}`;
+    return liEl;
+  });
+  console.log('htmlElArr ===', htmlElArr);
+  els.usersUl.append(...htmlElArr);
+}
+function generateUsersMapBeSpread(arr) {
+  arr
+    .map((usrObj) => {
+      const liEl = document.createElement('li');
+      liEl.textContent = `${usrObj.name} email: ${usrObj.email}`;
+      return liEl;
+    })
+    .forEach((el) => els.usersUl.append(el));
+  // .forEach(els.usersUl.append);
 }
